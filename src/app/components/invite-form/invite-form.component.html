@@ -1,0 +1,15 @@
+<!-- instruments-list.component.html -->
+
+<div class="instrument-container">
+  <div *ngFor="let inst of instruments" class="instrument-wrapper">
+    <div class="instrument-item">
+      <div class="content">
+        <h1>{{ inst.name }}</h1>
+        <p>{{ inst.description }}</p>
+      </div>
+    </div>
+    <div class="button-wrapper">
+      <a routerLink="invite/{{inst.id}}">Invite</a>
+    </div>
+  </div>
+</div>
