@@ -1,0 +1,8 @@
+<div>
+    <p *ngFor="let user of users">{{user.email}}</p>
+</div>
+
+<div>
+    <a routerLink="/invite/{{id}}">Back</a>
+    <button (click)="onInvite()">Invite</button>
+</div>

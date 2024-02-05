@@ -1,15 +1,44 @@
-<!-- instruments-list.component.html -->
+<ng-select
+  [items]="users"
+  [multiple]="true"
+  bindLabel="name"
+  groupBy="groups"
+  [selectableGroup]="true"
+  [selectableGroupAsModel]="false"
+  [closeOnSelect]="false"
+  [(ngModel)]="selectedUsers"
+  (change)="onChange($event)"
+  [searchFn]="searchFn"
+  (remove)="clearItem($event)"
+  addTagText="Create New"
+  notFoundText="No users found. Write valid to email to invite new users."
+  [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
+>
+  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+    <div *ngFor="let item of nonDuplicatedUsers" class="ng-value">
+      <span class="ng-value-icon left" (click)="clear(item)">×</span>
+      <span class="ng-value-label">{{ item.email }} </span>
+    </div>
+  </ng-template>
+  <ng-template
+    ng-optgroup-tmp
+    let-item="item"
+    let-item$="item$"
+    let-index="index"
+  >
+    <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
+    {{ item.groups }}
+  </ng-template>
+  <ng-template
+    ng-option-tmp
+    let-item="item"
+    let-item$="item$"
+    let-index="index"
+  >
+    <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
+    {{ item.name }} <span style="opacity: 0.5"> {{ item.email }} </span>
+  </ng-template>
+</ng-select>
 
-<div class="instrument-container">
-  <div *ngFor="let inst of instruments" class="instrument-wrapper">
-    <div class="instrument-item">
-      <div class="content">
-        <h1>{{ inst.name }}</h1>
-        <p>{{ inst.description }}</p>
-      </div>
-    </div>
-    <div class="button-wrapper">
-      <a routerLink="invite/{{inst.id}}">Invite</a>
-    </div>
-  </div>
-</div>
+<div><a routerLink="/">Back</a></div>
+<div><a routerLink="/preview/{{id}}">Next</a></div>

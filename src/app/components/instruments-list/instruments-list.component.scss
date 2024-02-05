@@ -1,0 +1,54 @@
+/* instruments-list.component.scss */
+
+/* Container for each instrument item */
+.instrument-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 100% viewport height */
+  }
+  
+  /* Wrapper for each instrument item */
+  .instrument-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px 20px; /* Adjusted margin for spacing between rectangles and below each item */
+  }
+  
+  /* Individual instrument item */
+  .instrument-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px; /* Increased padding for a larger size and wider content area */
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Increased border-radius for a rounded appearance */
+  }
+  
+  /* Container for content inside the instrument item */
+  .content {
+    flex-grow: 1; /* Allow content to grow and fill the available space */
+  }
+  
+  /* Heading style */
+  .instrument-item h1 {
+    font-size: 2em; /* Increased font size for the heading */
+    margin-bottom: 10px; /* Increased margin for spacing */
+  }
+  
+  /* Description style */
+  .instrument-item p {
+    color: #555;
+  }
+  
+  /* Wrapper for the invite button */
+  .button-wrapper {
+    margin-top: 10px; /* Adjusted margin for spacing between the content and the button */
+  }
+  
+  /* Invite link style */
+  .button-wrapper a {
+    display: inline-block;
+    padding: 15px; 
+  }
