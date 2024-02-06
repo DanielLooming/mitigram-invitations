@@ -8,6 +8,7 @@ import { GroupedUser, UserService } from '../../services/user.service';
 import { QuoteHeadlineContainerComponent } from '../quote-headline-container/quote-headline-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { isEmail } from 'validator';
 
 @Component({
   selector: 'app-invite-form',
@@ -25,6 +26,8 @@ export class InviteFormComponent {
   term: string = '';
   id: string = '';
 
+  isUsersFetched: boolean = false;
+
   constructor(
     private userService: UserService,
     private state: StateService,
@@ -32,16 +35,25 @@ export class InviteFormComponent {
   ) {}
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    this.fetchUsersAndInitialize();
+  }
+  
+  private fetchUsersAndInitialize(): void {
     this.userService.getUsers().subscribe((users) => {
       this.users = this.userService.groupDataByGroup(users);
+      this.allUsers = [...this.users]; // Ensure deep copy to prevent reference issues
+      this.selectedUsers = this.state.getSate(this.id);
+      this.onChange(this.selectedUsers);
 
-      this.allUsers = this.userService.groupDataByGroup(users);
+      this.isUsersFetched = true; 
     });
-    this.id = this.route.snapshot.paramMap.get('id') || '';
-    this.selectedUsers = this.state.getSate(this.id);
-    this.onChange(this.selectedUsers);
   }
 
+  isNextButtonDisabled(): boolean {
+    return !this.isUsersFetched;
+  }
+  
   onChange(selectedUsers: GroupedUser[]) {
     this.nonDuplicatedUsers = this.getNonDuplicatedUsers(selectedUsers);
     this.state.setState(this.id, selectedUsers);
@@ -69,33 +81,31 @@ export class InviteFormComponent {
     this.term = term;
   
     const isNameMatch = new RegExp(term, 'i').test(user.name);
-    const isEmailMatch = user.email.toLocaleLowerCase().includes(term);
-    const isGroupsMatch = user.groups.toLocaleLowerCase().includes(term);
+    const isEmailMatch = new RegExp(term, 'i').test(user.email);
+    const isGroupsMatch = new RegExp(term, 'i').test(user.groups);
   
     return isNameMatch || isEmailMatch || isGroupsMatch;
   };
   
 
-  addTag = (term: string) => {
-    if (!this.isEmail(term)) {
+  addNewUser = (userName: string) => {
+    const isValidEmail = this.emailValid(userName);
+  
+    if (!isValidEmail) {
       this.isValidEmail = false;
       return false;
-    } else {
-      this.isValidEmail = true;
-      return { email: term };
     }
-  };
+  
+    this.isValidEmail = true;
+    return { email: userName };
+  };  
 
-  isEmail(email: string) {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+  emailValid(email: string): boolean {
+    return isEmail(email);
   }
-
-  alreadyExist(email: string) {
-    return this.selectedUsers.some(
-      (selectedUser) => selectedUser.email === email
-    );
+  
+  doesUserExist(email: string): boolean {
+    return this.selectedUsers.some(user => user.email === email);
   }
 
   customOptions = (option: any, value: any): any => {

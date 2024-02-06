@@ -15,7 +15,7 @@
     (remove)="clearUsers($event)"
     addTagText="Invite New User"
     notFoundText="No counterpart users found for quoting"
-    [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
+    [addTag]="emailValid(term) && !doesUserExist(term) && addNewUser"
   >
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
@@ -55,7 +55,7 @@
 </div>
 
 <div class="next-button-container">
-  <button mat-raised-button color="primary" [routerLink]="'/preview/' + id" class="next-button">Next</button>
+  <button mat-raised-button color="primary" [routerLink]="'/preview/' + id" class="next-button" [disabled]="isNextButtonDisabled()">Next</button>
 </div>
 
 <div class="back-button-container">
