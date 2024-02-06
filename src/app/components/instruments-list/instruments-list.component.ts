@@ -1,30 +1,35 @@
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { QuoteHeadlineContainerComponent } from '../quote-headline-container/quote-headline-container.component';
+
 
 @Component({
   selector: 'app-instruments-list',
   standalone: true,
-  imports: [NgFor, RouterLink],
+  imports: [NgFor, RouterLink, MatCardModule, MatGridListModule, MatButtonModule, QuoteHeadlineContainerComponent], 
   templateUrl: './instruments-list.component.html',
   styleUrl: './instruments-list.component.scss'
 })
 export class InstrumentsListComponent {
   instruments: any[] = [
     {
-      name: 'Test 1',
-      description: 'test1',
-      id: 'test1'
+      name: 'Advanced Micro Devices Inc',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+      id: 'amd'
     },
     {
-      name: 'Test 2',
-      description: 'test2',
-      id: 'test2'
+      name: 'Palo Alto',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+      id: 'paloalto'
     },
     {
-      name: 'Test 3',
-      description: 'test3',
-      id: 'test3'
+      name: 'Uber',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+      id: 'uber'
     }
   ]
 }

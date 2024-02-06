@@ -1,0 +1,79 @@
+$button-next-color: #2CABD3;
+$button-next-text-color: #FFFFFF;
+
+$button-back-color: #C6C6C6;
+$button-back-text-color: #5D5D5D;
+
+.user-select-container {
+    text-align: center;
+    margin: 100px auto; // Adjust the top margin as needed
+    max-width: 800px; // Adjust the maximum width of the ng-select dropdown
+    height: 400px;
+  
+    .ng-select {
+      width: 100%; // Ensure the ng-select takes up 100% width
+    }
+
+    .ng-dropdown-panel {
+        max-height: 400px; // Adjust the max-height property as needed
+        line-height: 2; // Optional, adjust the line-height for better vertical alignment
+    }
+
+          
+  }
+  
+  // Optional: Add styles to make the dropdown options smaller
+  .ng-option {
+    font-size: 14px; // Adjust the font size as needed
+  }
+
+  .color-row {
+    color: red; // Set the desired color for the rows
+    // Add any other styling as needed
+  }
+  
+  .back-button-container {
+    position: fixed;
+    left: 200px;
+
+    button {
+        background-color: $button-back-color;
+        color: $button-back-text-color;
+
+        &:hover {
+            background-color: #EFEFEF;
+        }
+    }
+
+  }
+
+  .next-button-container {
+    position: fixed;
+    right: 200px;
+    
+    button {
+        background-color: $button-next-color;
+        color: $button-next-text-color;
+
+        &:hover {
+            background-color: #177998;
+        }
+    }
+  }
+
+  
+  .custom-color {
+    background-color: lightblue;
+  }
+  
+  .another-color {
+    background-color: lightgreen;
+  }
+
+  .custom-row-class {
+    background-color: lightblue;
+  }
+  
+  .another-row-class {
+    background-color: lightgreen;
+  }

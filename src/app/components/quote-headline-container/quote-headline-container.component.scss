@@ -1,0 +1,20 @@
+$underline-color: #2CABD3;
+$quote-color: #235565;
+
+.quote-container {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+  
+  .quote {
+    color: $quote-color;
+    font-size: 20px; /* Adjust the font size as needed */
+    margin: 0;
+  }
+  
+  .underline {
+    height: 2px;
+    background-color: $underline-color;
+    margin: 0 auto;
+  }

@@ -1,44 +1,65 @@
-<ng-select
-  [items]="users"
-  [multiple]="true"
-  bindLabel="name"
-  groupBy="groups"
-  [selectableGroup]="true"
-  [selectableGroupAsModel]="false"
-  [closeOnSelect]="false"
-  [(ngModel)]="selectedUsers"
-  (change)="onChange($event)"
-  [searchFn]="searchFn"
-  (remove)="clearItem($event)"
-  addTagText="Create New"
-  notFoundText="No users found. Write valid to email to invite new users."
-  [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
->
-  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-    <div *ngFor="let item of nonDuplicatedUsers" class="ng-value">
-      <span class="ng-value-icon left" (click)="clear(item)">×</span>
-      <span class="ng-value-label">{{ item.email }} </span>
-    </div>
-  </ng-template>
-  <ng-template
-    ng-optgroup-tmp
-    let-item="item"
-    let-item$="item$"
-    let-index="index"
-  >
-    <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
-    {{ item.groups }}
-  </ng-template>
-  <ng-template
-    ng-option-tmp
-    let-item="item"
-    let-item$="item$"
-    let-index="index"
-  >
-    <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
-    {{ item.name }} <span style="opacity: 0.5"> {{ item.email }} </span>
-  </ng-template>
-</ng-select>
+<app-quote-headline-container [message]="'Invite Counterparties to Quote for an Instrument'" [underlineWidth]="'24%'"></app-quote-headline-container>
 
-<div><a routerLink="/">Back</a></div>
-<div><a routerLink="/preview/{{id}}">Next</a></div>
+<div class="user-select-container" [style.margin-top.px]="100">
+  <ng-select class="select-users"
+    [items]="users"
+    [multiple]="true"
+    bindLabel="name"
+    groupBy="groups"
+    [selectableGroup]="true"
+    [selectableGroupAsModel]="false"
+    [closeOnSelect]="false"
+    [(ngModel)]="selectedUsers"
+    (change)="onChange($event)"
+    [searchFn]="searchFn"
+    (remove)="clearItem($event)"
+    addTagText="Create New"
+    notFoundText="No users found. Write valid to email to invite new users."
+    [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
+    (open)="onDropdownOpen()"
+  >
+
+  <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <span [ngClass]="{'custom-color': index % 2 === 0, 'another-color': index % 2 !== 0}">
+      {{ item.email }}
+    </span>
+  </ng-template>
+
+  <ng-template ng-option-tmp let-item="item" let-index="index" [ngOption]="customOptions">
+    <span>{{ item.name }}</span>
+  </ng-template> -->
+
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+      <div *ngFor="let item of nonDuplicatedUsers" class="ng-value">
+        <span class="ng-value-icon left" (click)="clear(item)">×</span>
+        <span class="ng-value-label">{{ item.email }} </span>
+      </div>
+    </ng-template>
+    <ng-template
+      ng-optgroup-tmp
+      let-item="item"
+      let-item$="item$"
+      let-index="index"
+    >
+      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
+      <span ngClass="{'color': red}">{{ item.groups }}</span>
+    </ng-template>
+    <ng-template
+      ng-option-tmp
+      let-item="item"
+      let-item$="item$"
+      let-index="index"
+    >
+      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected"/>
+      {{ item.name }} <span style="opacity: 0.5; background-color: red"> {{ item.email }} </span>
+    </ng-template>
+  </ng-select>
+</div>
+
+<div class="next-button-container">
+  <button mat-raised-button color="primary" [routerLink]="'/preview/' + id" class="next-button">Next</button>
+</div>
+
+<div class="back-button-container">
+  <button mat-raised-button color="primary" routerLink="/" class="back-button">Back</button>
+</div>

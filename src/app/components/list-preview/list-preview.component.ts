@@ -33,7 +33,8 @@ onInvite() {
   //clear state
   this.state.setState(this.id, []);
   this.router.navigateByUrl('/');
-  this.toastr.success('Invitations send!');
-}
- 
+  this.toastr.success('Invitations send!', 'Success!', {
+    
+  });
+} 
 }

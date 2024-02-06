@@ -5,11 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { GroupedUser, UserService } from '../../services/user.service';
+import { QuoteHeadlineContainerComponent } from '../quote-headline-container/quote-headline-container.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-invite-form',
   standalone: true,
-  imports: [NgSelectModule, FormsModule, NgFor, RouterLink],
+  imports: [NgSelectModule, FormsModule, NgFor, RouterLink, QuoteHeadlineContainerComponent, MatButtonModule, CommonModule, FormsModule],
   templateUrl: './invite-form.component.html',
   styleUrl: './invite-form.component.scss'
 })
@@ -22,6 +25,9 @@ export class InviteFormComponent {
   term: string = '';
   id: string = '';
 
+  colorRows: boolean[] = [true, true, true, false, true];
+  
+
   constructor(
     private userService: UserService,
     private state: StateService,
@@ -29,6 +35,7 @@ export class InviteFormComponent {
   ) {}
 
   ngOnInit(): void {
+    this.colorRows = [true, true, true, true, true];
     this.userService.getUsers().subscribe((users) => {
       this.users = this.userService.groupDataByGroup(users);
 
@@ -57,6 +64,10 @@ export class InviteFormComponent {
       (selectedUser) => selectedUser.email !== event.value.email
     );
     this.onChange(this.selectedUsers);
+  }
+
+  onDropdownOpen() {
+   
   }
 
   searchFn = (term: string, item: GroupedUser) => {
@@ -94,4 +105,12 @@ export class InviteFormComponent {
       (selectedUser) => selectedUser.email === email
     );
   }
+
+  customOptions = (option: any, value: any): any => {
+    const index = option.index || 0; // Ensure you have the correct index
+    return {
+      'custom-row-class': index % 2 === 0,
+      'another-row-class': index % 2 !== 0,
+    };
+  };
 }

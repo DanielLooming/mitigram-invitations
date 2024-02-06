@@ -1,54 +1,31 @@
-/* instruments-list.component.scss */
+$button-color: #2CABD3;
+$button-text-color: #FFFFFF;
 
-/* Container for each instrument item */
-.instrument-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* 100% viewport height */
+.example-card {
+    max-width: 500px; /* Set the maximum width of the card */
+    margin: 8px;
+    //max-height: 400px; /* Add margin for spacing between cards */
+    margin-top: 80px;
   }
   
-  /* Wrapper for each instrument item */
-  .instrument-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 10px 20px; /* Adjusted margin for spacing between rectangles and below each item */
+  .example-header-image {
+    background-image: '';
+    background-size: cover; /* Ensure the background image covers the entire area */
   }
-  
-  /* Individual instrument item */
-  .instrument-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px; /* Increased padding for a larger size and wider content area */
-    border: 1px solid #ccc;
-    border-radius: 10px; /* Increased border-radius for a rounded appearance */
+
+  .custom-image {
+    width: 100%; /* Set the width to 100% to fill the container */
+    height: 400px; /* Set the desired fixed height for the images */
+    object-fit: cover; /* Ensure the image covers the entire container */
   }
-  
-  /* Container for content inside the instrument item */
-  .content {
-    flex-grow: 1; /* Allow content to grow and fill the available space */
-  }
-  
-  /* Heading style */
-  .instrument-item h1 {
-    font-size: 2em; /* Increased font size for the heading */
-    margin-bottom: 10px; /* Increased margin for spacing */
-  }
-  
-  /* Description style */
-  .instrument-item p {
-    color: #555;
-  }
-  
-  /* Wrapper for the invite button */
-  .button-wrapper {
-    margin-top: 10px; /* Adjusted margin for spacing between the content and the button */
-  }
-  
-  /* Invite link style */
-  .button-wrapper a {
-    display: inline-block;
-    padding: 15px; 
+
+  mat-card-actions {
+    button {
+      background-color: $button-color;
+      color: $button-text-color;
+
+      &:hover {
+        background-color: #177998;
+      }
+    }
   }
