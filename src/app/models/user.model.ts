@@ -8,8 +8,8 @@ export interface User {
     groups?: string[];
   }
   
-  type Name = {
-    first: string;
-    last: string;
+  class Name {
+    first!: string;
+    last!: string;
   };
   

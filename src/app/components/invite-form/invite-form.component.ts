@@ -25,9 +25,6 @@ export class InviteFormComponent {
   term: string = '';
   id: string = '';
 
-  colorRows: boolean[] = [true, true, true, false, true];
-  
-
   constructor(
     private userService: UserService,
     private state: StateService,
@@ -35,7 +32,6 @@ export class InviteFormComponent {
   ) {}
 
   ngOnInit(): void {
-    this.colorRows = [true, true, true, true, true];
     this.userService.getUsers().subscribe((users) => {
       this.users = this.userService.groupDataByGroup(users);
 
@@ -44,11 +40,6 @@ export class InviteFormComponent {
     this.id = this.route.snapshot.paramMap.get('id') || '';
     this.selectedUsers = this.state.getSate(this.id);
     this.onChange(this.selectedUsers);
-    
-  }
-
-  setState() {
-    
   }
 
   onChange(items: GroupedUser[]) {
@@ -66,19 +57,18 @@ export class InviteFormComponent {
     this.onChange(this.selectedUsers);
   }
 
-  onDropdownOpen() {
-   
-  }
-
-  searchFn = (term: string, item: GroupedUser) => {
+  searchUsers = (term: string, user: GroupedUser) => {
     term = term.toLocaleLowerCase();
     this.term = term;
-    return (
-      item.name.toLocaleLowerCase().includes(term) ||
-      item.email.toLocaleLowerCase().includes(term) ||
-      item.groups.toLocaleLowerCase().includes(term)
-    );
+  
+    const isNameMatch = new RegExp(term, 'i').test(user.name);
+    const isEmailMatch = user.email.toLocaleLowerCase().includes(term);
+    const isGroupsMatch = user.groups.toLocaleLowerCase().includes(term);
+  
+    return isNameMatch || isEmailMatch || isGroupsMatch;
   };
+  
+
   addTag = (term: string) => {
     if (!this.isEmail(term)) {
       this.isValidEmail = false;
@@ -89,17 +79,12 @@ export class InviteFormComponent {
     }
   };
 
-  onClose() {
-    
-  }
-  onSubmit() {
-    
-  }
   isEmail(email: string) {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
+
   alreadyExist(email: string) {
     return this.selectedUsers.some(
       (selectedUser) => selectedUser.email === email

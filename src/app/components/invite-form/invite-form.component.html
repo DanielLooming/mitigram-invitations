@@ -11,12 +11,11 @@
     [closeOnSelect]="false"
     [(ngModel)]="selectedUsers"
     (change)="onChange($event)"
-    [searchFn]="searchFn"
+    [searchFn]="searchUsers"
     (remove)="clearItem($event)"
-    addTagText="Create New"
-    notFoundText="No users found. Write valid to email to invite new users."
+    addTagText="Invite New User"
+    notFoundText="No counterpart users found for quoting"
     [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
-    (open)="onDropdownOpen()"
   >
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
