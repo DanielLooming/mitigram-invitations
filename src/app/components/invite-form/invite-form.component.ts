@@ -42,17 +42,24 @@ export class InviteFormComponent {
     this.onChange(this.selectedUsers);
   }
 
-  onChange(items: GroupedUser[]) {
-    this.nonDuplicatedUsers = Object.values(
-      items.reduce((acc, item) => ({ ...acc, [item.id]: item }), {})
-    );
-    this.state.setState(this.id, this.selectedUsers);
+  onChange(selectedUsers: GroupedUser[]) {
+    this.nonDuplicatedUsers = this.getNonDuplicatedUsers(selectedUsers);
+    this.state.setState(this.id, selectedUsers);
   }
 
-  clearItem(event: any) {
-    console.log(this.selectedUsers);
+  private getNonDuplicatedUsers(users: GroupedUser[]): GroupedUser[] {
+    const uniqueUsersMap = new Map<string, GroupedUser>();
+    
+    users.forEach(user => {
+      uniqueUsersMap.set(user.id, user);
+    });
+  
+    return Array.from(uniqueUsersMap.values());
+  }
+
+  clearUsers(selectedUserToRemove: GroupedUser) {
     this.selectedUsers = this.selectedUsers.filter(
-      (selectedUser) => selectedUser.email !== event.value.email
+      (user) => user.email !== selectedUserToRemove.email
     );
     this.onChange(this.selectedUsers);
   }

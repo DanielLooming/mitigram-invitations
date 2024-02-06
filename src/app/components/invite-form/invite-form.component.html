@@ -12,7 +12,7 @@
     [(ngModel)]="selectedUsers"
     (change)="onChange($event)"
     [searchFn]="searchUsers"
-    (remove)="clearItem($event)"
+    (remove)="clearUsers($event)"
     addTagText="Invite New User"
     notFoundText="No counterpart users found for quoting"
     [addTag]="isEmail(term) && !alreadyExist(term) ? addTag : false"
