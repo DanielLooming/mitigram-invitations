@@ -1,22 +1,24 @@
 <app-quote-headline-container [message]="'Invite Counterparties to Quote for an Instrument'" [underlineWidth]="'24%'"></app-quote-headline-container>
 
 <div class="user-select-container" [style.margin-top.px]="100">
-  <ng-select class="select-users"
-    [items]="users"
-    [multiple]="true"
-    bindLabel="name"
-    groupBy="groups"
-    [selectableGroup]="true"
-    [selectableGroupAsModel]="false"
-    [closeOnSelect]="false"
-    [(ngModel)]="selectedUsers"
-    (change)="onChange($event)"
-    [searchFn]="searchUsers"
-    (remove)="clearUsers($event)"
-    addTagText="Invite New User"
-    notFoundText="No counterpart users found for quoting"
-    [addTag]="emailValid(term) && !doesUserExist(term) && addNewUser"
-  >
+  <ng-select
+  [multiple]="true"
+  bindLabel="name"
+  [items]="users"
+  [closeOnSelect]="false"
+  [selectableGroup]="true"
+  groupBy="groups"
+  [selectableGroupAsModel]="false"
+  [addTag]="emailValid(term) && !doesUserExist(term) && addNewUser"
+  addTagText="Invite New User"
+  [searchFn]="searchUsers"
+  notFoundText="No counterpart users found for quoting"
+  [(ngModel)]="selectedUsers"
+  (change)="onChange($event)"
+  (remove)="clearUsers($event)"
+  class="select-users"
+>
+
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
       <div *ngFor="let item of nonDuplicatedUsers" class="ng-value">
