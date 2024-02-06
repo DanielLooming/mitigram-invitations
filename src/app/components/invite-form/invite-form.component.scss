@@ -61,19 +61,48 @@ $button-back-text-color: #5D5D5D;
     }
   }
 
-  
-  .custom-color {
-    background-color: lightblue;
+  .custom-container {
+    text-align: center;
+    margin: 100px auto;
+    max-width: 600px;
   }
   
-  .another-color {
-    background-color: lightgreen;
-  }
-
-  .custom-row-class {
-    background-color: lightblue;
+  .custom-select {
+    width: 100%;
   }
   
-  .another-row-class {
-    background-color: lightgreen;
+  .custom-optgroup {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Light grey background for optgroup */
   }
+  
+  .optgroup-label {
+    margin-left: 8px;
+  }
+  
+  .custom-option {
+    display: flex;
+    align-items: center;
+    background-color: #e6f7ff; /* Light blue background for option */
+  }
+  
+  .option-label {
+    margin-left: 8px;
+  }
+  
+  .option-email {
+    opacity: 0.7;
+    margin-left: 8px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .next-button, .back-button {
+    width: 48%;
+  }
+  
