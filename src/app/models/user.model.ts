@@ -2,8 +2,8 @@ export interface User {
     _id: string;
     picture: string;
     name: Name;
-    company: string;
     email: string;
+    company: string;
     phone: string;
     groups?: string[];
   }
