@@ -9,11 +9,12 @@ import { UserByGroup } from '../../models/user-group.model';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastrModule } from 'ngx-toastr';
 import { CustomToastComponent } from '../custom-toast/custom-toast.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-preview',
   standalone: true,
-  imports: [NgFor, RouterLink, UserDisplayComponent, QuoteHeadlineContainerComponent, MatButtonModule, CustomToastComponent],
+  imports: [NgFor, RouterLink, UserDisplayComponent, QuoteHeadlineContainerComponent, MatButtonModule, CustomToastComponent, CommonModule],
   templateUrl: './list-preview.component.html',
   styleUrl: './list-preview.component.scss'
 })
