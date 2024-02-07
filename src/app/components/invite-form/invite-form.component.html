@@ -1,66 +1,50 @@
-<app-quote-headline-container [message]="'Invite Counterparties to Quote for an Instrument'" [underlineWidth]="'24%'"></app-quote-headline-container>
+<app-quote-headline-container [message]="'Invite counterparties to quote for an instrument(type in for custom email invitation)'" [underlineWidth]="'42%'"></app-quote-headline-container>
 
 <div class="user-select-container" [style.margin-top.px]="100">
   <ng-select
-  [multiple]="true"
-  bindLabel="name"
-  [items]="users"
-  [closeOnSelect]="false"
-  [selectableGroup]="true"
-  groupBy="groups"
-  [selectableGroupAsModel]="false"
-  [addTag]="emailValid(term) && !doesUserExist(term) && addNewUser"
-  addTagText="Invite New User"
-  [searchFn]="searchUsers"
-  notFoundText="No counterpart users found for quoting"
-  [(ngModel)]="selectedUsers"
-  (change)="onChange($event)"
-  (remove)="clearUsers($event)"
-  class="select-users"
->
-
-
-    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-      <div *ngFor="let item of nonDuplicatedUsers" class="ng-value">
-        <span class="ng-value-icon left" (click)="clear(item)">×</span>
-        <span class="ng-value-label">{{ item.email }} </span>
-      </div>
-    </ng-template>
-
-    <ng-template
-      ng-optgroup-tmp
-      let-item="item"
-      let-item$="item$"
-      let-index="index"
-    >
-      <div class="custom-optgroup">
-      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" />
-      <span ngClass="{'color': red}">{{ item.groups }}</span>
-      </div>
-    </ng-template>
-
-
-    <ng-template
-      ng-option-tmp
-      let-item="item"
-      let-item$="item$"
-      let-index="index"
-    >
-       <div class="custom-option">
-      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected"/>
-      {{ item.name }} <span style="opacity: 0.5"> {{ item.email }} </span>
-       </div>
-    </ng-template>
-
-
-  </ng-select>
+    [multiple]="true"
+    bindLabel="name"
+    [items]="usersInvited"
+    [closeOnSelect]="false"
+    [selectableGroup]="true"
+    groupBy="groups"
+    [selectableGroupAsModel]="false"
+    [addTag]="emailValid(typedUser) && !doesUserExist(typedUser) && addNewUser"
+    addTagText="Invite New User"
+    [searchFn]="searchUsers"
+    notFoundText="No counterpart users found for quoting"
+    [(ngModel)]="selectedUsers"
+    (change)="onChange($event)"
+    (remove)="clearUser($event)"
+    class="select-users"
+  >
+  <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+    <div *ngFor="let item of uniqueInvitedUsers; let i = index" class="ng-value">
+      <span class="ng-value-icon left" (click)="clearUser(item)">×</span>
+      <span class="ng-value-label option-email" [ngClass]="{ 'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0 }">{{ item.email }} </span>
+    </div>
+  </ng-template>
+    
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <div class="custom-option" [ngClass]="{ 'custom-row-class': index % 2 === 0, 'another-row-class': index % 2 !== 0 }">
+      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" class="option-email"/>
+      <span class="option-company">company: {{item.company}}</span><span class="option-email">, email: {{ item.email }}</span><span class="option-name">, name: {{ item.name }}({{item.phone}})</span>
+    </div>
+  </ng-template>
+    
+  <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+    <div class="custom-optgroup" [ngClass]="{ 'custom-optgroup-class': true }">
+      <input id="item-{{ index }}" type="checkbox" [ngModel]="item$.selected" class="option-email"/>
+      <span class="option-groups">{{ item.groups }}</span>
+    </div>
+  </ng-template>
+</ng-select>
 </div>
 
 <div class="next-button-container">
-  <button mat-raised-button color="primary" [routerLink]="'/preview/' + id" class="next-button" [disabled]="isNextButtonDisabled()">Next</button>
+  <button mat-raised-button color="primary" [routerLink]="'/preview/' + id" class="next-button" [disabled]="this.selectedUsers.length === 0 || !this.isUsersFetched">Next</button>
 </div>
 
 <div class="back-button-container">
   <button mat-raised-button color="primary" routerLink="/" class="back-button">Back</button>
 </div>
-

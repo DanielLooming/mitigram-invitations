@@ -4,27 +4,30 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { GroupedUser, UserService } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { QuoteHeadlineContainerComponent } from '../quote-headline-container/quote-headline-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { isEmail } from 'validator';
+import { SharedModule } from '../../shared.module';
+import { UserByGroup } from '../../models/user-group.model';
 
 @Component({
   selector: 'app-invite-form',
   standalone: true,
   imports: [NgSelectModule, FormsModule, NgFor, RouterLink, QuoteHeadlineContainerComponent, MatButtonModule, CommonModule, FormsModule],
+  providers: [UserService],
   templateUrl: './invite-form.component.html',
   styleUrl: './invite-form.component.scss'
 })
 export class InviteFormComponent {
-  users: GroupedUser[] = [];
-  allUsers: GroupedUser[] = [];
-  selectedUsers: GroupedUser[] = [];
-  nonDuplicatedUsers: GroupedUser[] = [];
+  uniqueInvitedUsers: UserByGroup[] = [];
   isValidEmail!: boolean;
-  term: string = '';
+  typedUser: string = '';
   id: string = '';
+  usersInvited: UserByGroup[] = []; 
+  selectedUsers: UserByGroup[] = [];
+  allInvitedUsers: UserByGroup[] = [];
 
   isUsersFetched: boolean = false;
 
@@ -41,52 +44,14 @@ export class InviteFormComponent {
   
   private fetchUsersAndInitialize(): void {
     this.userService.getUsers().subscribe((users) => {
-      this.users = this.userService.groupDataByGroup(users);
-      this.allUsers = [...this.users]; // Ensure deep copy to prevent reference issues
+      this.usersInvited = this.userService.groupDataByGroup(users);
+      this.allInvitedUsers = [...this.usersInvited]; 
       this.selectedUsers = this.state.getSate(this.id);
       this.onChange(this.selectedUsers);
 
       this.isUsersFetched = true; 
     });
   }
-
-  isNextButtonDisabled(): boolean {
-    return !this.isUsersFetched;
-  }
-  
-  onChange(selectedUsers: GroupedUser[]) {
-    this.nonDuplicatedUsers = this.getNonDuplicatedUsers(selectedUsers);
-    this.state.setState(this.id, selectedUsers);
-  }
-
-  private getNonDuplicatedUsers(users: GroupedUser[]): GroupedUser[] {
-    const uniqueUsersMap = new Map<string, GroupedUser>();
-    
-    users.forEach(user => {
-      uniqueUsersMap.set(user.id, user);
-    });
-  
-    return Array.from(uniqueUsersMap.values());
-  }
-
-  clearUsers(selectedUserToRemove: GroupedUser) {
-    this.selectedUsers = this.selectedUsers.filter(
-      (user) => user.email !== selectedUserToRemove.email
-    );
-    this.onChange(this.selectedUsers);
-  }
-
-  searchUsers = (term: string, user: GroupedUser) => {
-    term = term.toLocaleLowerCase();
-    this.term = term;
-  
-    const isNameMatch = new RegExp(term, 'i').test(user.name);
-    const isEmailMatch = new RegExp(term, 'i').test(user.email);
-    const isGroupsMatch = new RegExp(term, 'i').test(user.groups);
-  
-    return isNameMatch || isEmailMatch || isGroupsMatch;
-  };
-  
 
   addNewUser = (userName: string) => {
     const isValidEmail = this.emailValid(userName);
@@ -98,14 +63,51 @@ export class InviteFormComponent {
   
     this.isValidEmail = true;
     return { email: userName };
-  };  
+  };
+
+  searchUsers = (typedUser: string, user: UserByGroup) => {
+    typedUser = typedUser.toLocaleLowerCase();
+    this.typedUser = typedUser;
+  
+    const isNameMatch = new RegExp(typedUser, 'i').test(user.name);
+    const isEmailMatch = new RegExp(typedUser, 'i').test(user.email);
+    const isGroupsMatch = new RegExp(typedUser, 'i').test(user.groups);
+  
+    return isNameMatch || isEmailMatch || isGroupsMatch;
+  };
 
   emailValid(email: string): boolean {
     return isEmail(email);
   }
+
+  onChange(selectedUsers: UserByGroup[]) {
+    this.uniqueInvitedUsers = this.getNonDuplicatedUsers(selectedUsers);
+    this.state.setState(this.id, selectedUsers);
+  }
+
+  private getNonDuplicatedUsers(users: UserByGroup[]): UserByGroup[] {
+    const uniqueUsersMap = new Map<string, UserByGroup>();
+    
+    users.forEach(user => {
+      uniqueUsersMap.set(user.id, user);
+    });
   
+    return Array.from(uniqueUsersMap.values());
+  }
+
   doesUserExist(email: string): boolean {
     return this.selectedUsers.some(user => user.email === email);
+  }
+
+  handleRemoveUserEvent(removedUser: any) {
+    this.clearUser(removedUser);
+  }
+
+  clearUser(selectedUserToRemove: UserByGroup) {
+    this.selectedUsers = this.selectedUsers.filter(
+      (user) => user.email !== selectedUserToRemove.email
+    );
+    this.onChange(this.selectedUsers);
   }
 
   customOptions = (option: any, value: any): any => {

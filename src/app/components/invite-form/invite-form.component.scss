@@ -1,108 +1,132 @@
-$button-next-color: #2CABD3;
-$button-next-text-color: #FFFFFF;
+@import '../../../styles/variables.scss';
 
-$button-back-color: #C6C6C6;
-$button-back-text-color: #5D5D5D;
-
+//TODO: Needs a little bit of a cleanup
 .user-select-container {
-    text-align: center;
-    margin: 100px auto; // Adjust the top margin as needed
-    max-width: 800px; // Adjust the maximum width of the ng-select dropdown
-    height: 400px;
-  
-    .ng-select {
-      width: 100%; // Ensure the ng-select takes up 100% width
-    }
+  text-align: center;
+  margin: 100px auto;
+  max-width: 1060px;
+  height: 400px;
 
-    .ng-dropdown-panel {
-        max-height: 400px; // Adjust the max-height property as needed
-        line-height: 2; // Optional, adjust the line-height for better vertical alignment
-    }
-
-          
-  }
-  
-  // Optional: Add styles to make the dropdown options smaller
-  .ng-option {
-    font-size: 14px; // Adjust the font size as needed
-  }
-
-  .color-row {
-    color: red; // Set the desired color for the rows
-    // Add any other styling as needed
-  }
-  
-  .back-button-container {
-    position: fixed;
-    left: 200px;
-
-    button {
-        background-color: $button-back-color;
-        color: $button-back-text-color;
-
-        &:hover {
-            background-color: #EFEFEF;
-        }
-    }
-
-  }
-
-  .next-button-container {
-    position: fixed;
-    right: 200px;
-    
-    button {
-        background-color: $button-next-color;
-        color: $button-next-text-color;
-
-        &:hover {
-            background-color: #177998;
-        }
-    }
-  }
-
-  .custom-container {
-    text-align: center;
-    margin: 100px auto;
-    max-width: 600px;
-  }
-  
-  .custom-select {
+  .ng-select {
     width: 100%;
   }
-  
-  .custom-optgroup {
-    display: flex;
-    align-items: center;
-    background-color: #f0f0f0; /* Light grey background for optgroup */
+
+  .ng-dropdown-panel {
+    max-height: 400px;
+    line-height: 2;
   }
-  
-  .optgroup-label {
-    margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .user-select-container {
+    margin: 50px auto;
+    height: auto;
+
+    .ng-dropdown-panel {
+      max-height: none;
+    }
   }
-  
-  .custom-option {
-    display: flex;
-    align-items: center;
-    background-color: #e6f7ff; /* Light blue background for option */
-  }
-  
-  .option-label {
-    margin-left: 8px;
-  }
-  
-  .option-email {
-    opacity: 0.7;
-    margin-left: 8px;
-  }
-  
+
   .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    flex-direction: column;
+
+    .next-button, .back-button {
+      width: 100%;
+      margin-top: 10px;
+    }
   }
-  
+}
+
+.back-button-container {
+  position: fixed;
+  left: 200px;
+
+  button {
+    background-color: $button-back-color;
+    color: $button-back-text-color;
+
+    &:hover {
+      background-color: #EFEFEF;
+    }
+  }
+}
+
+.next-button-container {
+  position: fixed;
+  right: 200px;
+
+  button {
+    background-color: $button-next-color;
+    color: $button-next-text-color;
+
+    &:hover {
+      background-color: #177998;
+    }
+  }
+
+  button[disabled] {
+    background-color: #CCCCCC;
+    color: #666666;
+    cursor: not-allowed;
+  }
+}
+
+.custom-container {
+  text-align: center;
+  margin: 100px auto;
+  max-width: 600px;
+}
+
+.custom-select {
+  width: 100%;
+}
+
+.custom-optgroup {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.optgroup-label {
+  margin-left: 8px;
+}
+
+.custom-option {
+  display: flex;
+  align-items: center;
+  background-color: #e6f7ff;
+}
+
+.option-label {
+  margin-left: 8px;
+}
+
+.option-name {
+  margin-left: 8px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.option-email {
+  margin-left: 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 300;
+}
+
+.option-company {
+  margin-left: 8px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.option-groups {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+
   .next-button, .back-button {
     width: 48%;
   }
-  
+}

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -6,7 +7,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, MatToolbarModule],
+  imports: [RouterOutlet, NgFor, MatToolbarModule, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

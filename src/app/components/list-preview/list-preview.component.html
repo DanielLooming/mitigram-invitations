@@ -1,8 +1,17 @@
-<div>
-    <p *ngFor="let user of users">{{user.email}}</p>
-</div>
+<app-quote-headline-container [message]="'Invitation List Email Review'" [underlineWidth]="'20%'"></app-quote-headline-container>
 
-<div>
-    <a routerLink="/invite/{{id}}">Back</a>
-    <button (click)="onInvite()">Invite</button>
+<div class="user-container">
+  <div class="user-row" *ngFor="let user of users; let i = index">
+    <app-user-display [user]="user" (removeUser)="removeUser(user)"></app-user-display>
+    <ng-container *ngIf="(i + 1) % 3 === 0; else noLineBreak"></ng-container>
+    <ng-template #noLineBreak></ng-template>
+  </div>
+</div>
+  
+<div class="next-button-container">
+    <button mat-raised-button color="primary" (click)="onInvite()" class="next-button" [disabled]="users.length === 0">Finish Invitation</button>
+</div>
+  
+<div class="back-button-container">
+    <button mat-raised-button color="primary" routerLink="/invite/{{id}}" class="back-button">Back</button>
 </div>

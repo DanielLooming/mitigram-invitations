@@ -1,14 +1,14 @@
-<app-quote-headline-container [message]="'Choose a Financial Instrument and proceed with the Invitation'"></app-quote-headline-container>
+<app-quote-headline-container [message]="'Choose a financial Instrument and proceed with the invitation'"></app-quote-headline-container>
 
-  <mat-grid-list cols="3" rowHeight="750px">
-    <mat-grid-tile *ngFor="let inst of instruments">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image" [style.background-image]="'url(' + '../../assets/' + inst.id + '.png' + ')'" ></div>
-          <mat-card-title>{{inst.name}}</mat-card-title>
-          <mat-card-subtitle>Financial Instrument</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image class="custom-image" [src]="'../../assets/' + inst.id + '.png'" alt="Logo for {{inst.id}}">
+<mat-grid-list cols="3" rowHeight="750px">
+  <mat-grid-tile *ngFor="let inst of instruments">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image" [style.background-image]="'url(' + '../../assets/' + inst.id + '.png' + ')'" ></div>
+        <mat-card-title>{{inst.name}}</mat-card-title>
+        <mat-card-subtitle>Financial Instrument</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image class="custom-image" [src]="'../../assets/' + inst.id + '.png'" alt="Logo for {{inst.id}}">
         <mat-card-content>
           <p>
             {{inst.description}}
@@ -19,8 +19,8 @@
               INVITE
             </button>
           </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
   
   

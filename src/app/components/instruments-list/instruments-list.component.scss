@@ -1,31 +1,51 @@
-$button-color: #2CABD3;
-$button-text-color: #FFFFFF;
+@import '../../../styles/variables.scss';
 
 .example-card {
-    max-width: 500px; /* Set the maximum width of the card */
-    margin: 8px;
-    //max-height: 400px; /* Add margin for spacing between cards */
-    margin-top: 80px;
-  }
+  max-width: 500px; 
+  margin: 8px;
+  margin-top: 80px;
+}
   
-  .example-header-image {
-    background-image: '';
-    background-size: cover; /* Ensure the background image covers the entire area */
+.example-header-image {
+  background-image: '';
+  background-size: cover; 
+}
+
+.custom-image {
+  width: 100%; 
+  height: 400px; 
+  object-fit: cover; 
+}
+
+mat-card-actions {
+  button {
+    background-color: $button-color;
+    color: $button-text-color;
+
+    &:hover {
+      background-color: #177998;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .example-card {
+    max-width: 400px;
+  }
+}
+  
+@media screen and (max-width: 992px) {
+  .example-card {
+     max-width: 300px;
   }
 
   .custom-image {
-    width: 100%; /* Set the width to 100% to fill the container */
-    height: 400px; /* Set the desired fixed height for the images */
-    object-fit: cover; /* Ensure the image covers the entire container */
+    max-height: 300px; 
   }
-
-  mat-card-actions {
-    button {
-      background-color: $button-color;
-      color: $button-text-color;
-
-      &:hover {
-        background-color: #177998;
-      }
-    }
+}
+  
+@media screen and (max-width: 768px) {
+  .example-card {
+    max-width: 100%;
   }
+}
